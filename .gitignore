@@ -9,6 +9,7 @@
 /bin
 /lib
 /.settings
+/.metadata
 
 # Eclipse project files #
 .classpath

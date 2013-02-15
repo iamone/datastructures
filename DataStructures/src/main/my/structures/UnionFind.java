@@ -43,25 +43,30 @@ public class UnionFind<T extends Node>{
 	}
 	
 	public boolean union(T item1, T item2) {
-		Element e1 = elementsMap.get(item1.getNum());
-		Element e2 = elementsMap.get(item2.getNum());
+		Element e1parent = elementsMap.get(item1.getNum());
+		Element e2parent = elementsMap.get(item2.getNum());
+		Element e1 = e1parent;
+		Element e2 = e2parent;
 		
-		while(e1.parent() != e1)
-			e1 = e1.parent();
-		while(e2.parent() != e2)
-			e2 = e2.parent();
+		while(e1parent.parent() != e1parent)
+			e1parent = e1parent.parent();
+		while(e2parent.parent() != e2parent)
+			e2parent = e2parent.parent();
 		
-		if(e1 == e2)
+		e1.setParent(e1parent);
+		e2.setParent(e2parent);
+		
+		if(e1parent == e2parent)
 			return false;
 		
-		if(e1.getSize() > e2.getSize()) {
-			e1.setSize(e1.getSize() + e2.getSize());
-			e2.setSize(0);
-			e2.setParent(e1);
+		if(e1parent.getSize() > e2parent.getSize()) {
+			e1parent.setSize(e1parent.getSize() + e2parent.getSize());
+			e2parent.setSize(0);
+			e2parent.setParent(e1parent);
 		} else {
-			e2.setSize(e1.getSize() + e2.getSize());
-			e1.setSize(0);
-			e1.setParent(e2);
+			e2parent.setSize(e1parent.getSize() + e2parent.getSize());
+			e1parent.setSize(0);
+			e1parent.setParent(e2parent);
 		}
 		return true;
 	}
